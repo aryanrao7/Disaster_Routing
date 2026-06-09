@@ -4,17 +4,13 @@ An end-to-end machine learning and geospatial routing pipeline designed to dynam
 
 ![Disaster Routing Output Map](demo_output.jpeg)
 
-This map is the final output where two distinct systems—Deep Learning and Classical Graph Theory—synchronize. The architecture ingests raw satellite imagery, detects disaster zones, and dynamically modifies the underlying geometry of the city grid to calculate a safe route.
+*Above: Live inference run on a recent Los Angeles wildfire using raw satellite GeoTIFFs.*
 
-### The Red Lines (AI Sabotage of the Graph)
-These represent road segments that have been deemed completely impassable or destroyed.
-* **The AI Connection:** The trained U-Net AI model (`disaster_unet.pth`) analyzes a live, post-disaster satellite GeoTIFF. By recognizing the universal visual signatures of destruction (broken geometry, chaotic textures, scorch marks), it generates a high-confidence probability mask (the "stencil").
-* **The Sabotage:** The routing engine overlays this stencil onto the live street map. Wherever a street segment intersects with the AI's "danger zone," the engine programmatically amputates that mathematical edge from the geospatial graph, simulating the destruction of physical infrastructure.
+This specific map demonstrates the pipeline reacting to the recent Los Angeles wildfires. It shows two distinct systems—Deep Learning and Classical Graph Theory—synchronizing to safely route emergency responders through a live disaster zone.
 
-### The Green Lines (Dijkstra Pathfinding around Danger)
-This is the shortest, mathematically safe alternative route calculated for an emergency responder.
-* **The Graph Algorithm Connection:** Once the AI deletes the red roads, the Map Engine (NetworkX) is left with a broken, disconnected network. 
-* **The Behavior:** The pathfinding algorithm (`nx.shortest_path`) hits the newly created red walls and dynamically recalculates. It swerves through the surviving street grid to find the optimal path. To ensure the green rescue line can physically connect the start and end points, the AI's "destruction threshold" can be tuned (e.g., rejecting roads only at a 95% damage probability) to prevent the algorithm from being entirely choked out of the neighborhood.
+### What The Lines Mean
+* **The Sabotage (Red Lines):** These are actual streets in Los Angeles that the AI has deemed impassable. The trained U-Net model analyzed the live satellite photo of the LA fire, detected the visual signatures of the destruction, and programmatically amputated those specific burning roads from the city's mathematical street graph.
+* **The Rescue (Green Line):** This is the dynamic emergency route. Once the AI deleted the burning neighborhoods (red zones), the pathfinding algorithm hit those dead ends, dynamically recalculated the weights of the surviving street grid, and successfully plotted the safest, shortest detour around the wildfire to connect the start and end points.
 
 ---
 
@@ -45,6 +41,18 @@ This system is a **globally agnostic routing engine**. It is not restricted to a
 2. **Geospatial Extraction (Rasterio):** Intercepts raw 16-bit satellite GeoTIFFs, scales the scientific light data for AI ingestion, and rips the embedded coordinate boundaries.
 3. **Graph Sabotage Engine (OSMnx):** Intercepts OpenStreetMap real-world network data. If the AI detects critical damage at specific geospatial coordinates, the engine programmatically amputates those localized edges from the mathematical graph.
 4. **Dynamic Pathfinding (NetworkX):** Executes Dijkstra's algorithm across the surviving graph components to generate the safest alternative route for emergency responders.
+
+---
+
+### The Red Lines (AI Sabotage of the Graph)
+These represent road segments that have been deemed completely impassable or destroyed.
+* **The AI Connection:** The trained U-Net AI model (`disaster_unet.pth`) analyzes a live, post-disaster satellite GeoTIFF. By recognizing the universal visual signatures of destruction (broken geometry, chaotic textures, scorch marks), it generates a high-confidence probability mask (the "stencil").
+* **The Sabotage:** The routing engine overlays this stencil onto the live street map. Wherever a street segment intersects with the AI's "danger zone," the engine programmatically amputates that mathematical edge from the geospatial graph, simulating the destruction of physical infrastructure.
+
+### The Green Lines (Dijkstra Pathfinding around Danger)
+This is the shortest, mathematically safe alternative route calculated for an emergency responder.
+* **The Graph Algorithm Connection:** Once the AI deletes the red roads, the Map Engine (NetworkX) is left with a broken, disconnected network. 
+* **The Behavior:** The pathfinding algorithm (`nx.shortest_path`) hits the newly created red walls and dynamically recalculates. It swerves through the surviving street grid to find the optimal path. To ensure the green rescue line can physically connect the start and end points, the AI's "destruction threshold" can be tuned (e.g., rejecting roads only at a 95% damage probability) to prevent the algorithm from being entirely choked out of the neighborhood.
 
 ---
 
