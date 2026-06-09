@@ -1,0 +1,16 @@
+# Python Environment
+venv/
+__pycache__/
+*.pyc
+
+# Massive Data & Weights
+data/
+tier3/
+test_data/
+*.tar
+*.pth
+cache/
+.DS_Store
+
+# Generated Maps
+*.html

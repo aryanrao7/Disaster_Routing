@@ -1,0 +1,11 @@
+torch
+torchvision
+torchaudio
+opencv-python
+numpy
+osmnx
+networkx
+folium
+shapely
+matplotlib
+rasterio
