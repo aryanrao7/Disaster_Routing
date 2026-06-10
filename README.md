@@ -6,7 +6,7 @@ An end-to-end machine learning and geospatial routing pipeline designed to dynam
 
 *Above: Live inference run on a recent Los Angeles wildfire using raw satellite GeoTIFFs.*
 
-This specific map demonstrates the pipeline reacting to the recent Los Angeles wildfires. It shows two distinct systems—Deep Learning and Classical Graph Theory—synchronizing to safely route emergency responders through a live disaster zone.
+This specific map demonstrates the pipeline reacting to the recent Los Angeles wildfires. It shows two distinct systems, Deep Learning and Classical Graph Theory, synchronizing to safely route emergency responders through a live disaster zone.
 
 ### What The Lines Mean
 * **The Sabotage (Red Lines):** These are actual streets in Los Angeles that the AI has deemed impassable. The trained U-Net model analyzed the live satellite photo of the LA fire, detected the visual signatures of the destruction, and programmatically amputated those specific burning roads from the city's mathematical street graph.
